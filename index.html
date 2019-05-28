@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>fecting_data_from tv mazeapi </title>
+</head>
+<style type="text/css">
+.pop{
+	width:500px;
+	height:600px;
+	background-color: rgb(200,0,200);
+    margin:auto;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js"></script>
+<script >
+	function createNode(element){
+
+	return document.createElement(element);
+}
+
+function append(parent,el){
+	return parent.appendChild(el);
+}
+
+const ul = document.getElementById('talli');
+const url = "http://api.tvmaze.com/schedule?result=10";
+
+ fetch(url)
+ .then((resp) => resp.json())
+ .then(function(data){
+ 	let shows = data.results;
+
+ 	return shows.map(function(shows){
+ 		let li =createNode('li'),
+ 		img = createNode('img'),
+ 		span = createNode('span');
+
+ 		span.innerHTML = `${shows.image},${shows.name};
+ 		                   `
+ 		    append(li,img);               
+ 		    append(li,span);
+ 		    append(ul,li);
+
+ 	})
+ }) 
+ .catch( function(error){
+ 	consle.log(JSON.stringify(error));
+ })
+</script>
+<script src="vanilla.js"></script>
+<body>
+<div class="pop">
+	<h1> Current Shows</h1>
+	<ul id ="talli"></ul>
+</div>
+</body>
+</html>
